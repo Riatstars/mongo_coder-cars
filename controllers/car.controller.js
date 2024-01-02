@@ -84,24 +84,10 @@ carController.getCars = async (req, res, next) => {
     let skip = (page - 1) * limit;
     const data = await Car.find({}).skip(skip).limit(limit);
     const total = await Car.find().count();
-
-    const returnData = data.map((item) => {
-      return {
-        _id: item._id,
-        make: item.make,
-        model: item.model,
-        release_date: item.year,
-        transmission_type: item.transmission_type,
-        size: item.vehicle_size,
-        style: vehicle_style,
-        price: item.msrp,
-      };
-    });
-
     const response = {
-      status: success,
+      message: "success",
       data: {
-        cars: returnData,
+        cars: data,
         total: Math.floor(total / limit),
       },
     };
