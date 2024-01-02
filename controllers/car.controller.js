@@ -84,7 +84,10 @@ carController.getCars = async (req, res, next) => {
     let skip = (page - 1) * limit;
     const data = await Car.find({}).skip(skip).limit(limit);
     const total = await Car.find().count();
-    const response = { message: "success", data: { cars: data, total: total } };
+    const response = {
+      message: "success",
+      data: { cars: data, total: Math.floor(total / limit) },
+    };
     res.send(response);
   } catch (err) {
     next(err);
